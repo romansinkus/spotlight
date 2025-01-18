@@ -1,12 +1,12 @@
 import React from 'react';
 
 const locations = [
-    { id: 1, name: 'Irving K Barber Library', image: '/images/location1.jpg' },
-    { id: 2, name: 'Koerners Library', image: '/images/location2.jpg' },
-    { id: 3, name: 'Woodward Library', image: '/images/location3.jpg' },
-    { id: 4, name: 'The Nest', image: '/images/location4.jpg' },
-    { id: 5, name: 'BirdCoop', image: '/images/location5.jpg' },
-    { id: 6, name: 'Location 6', image: '/images/location6.jpg' },
+    { id: 1, name: 'Irving K Barber Library', image: '/images/IKB.jpg' },
+    { id: 2, name: 'Koerners Library', image: '/images/Koerner.jpg' },
+    { id: 3, name: 'Woodward Library', image: '/images/Woodward.jpg' },
+    { id: 4, name: 'The Nest', image: '/images/Nest.jpg' },
+    { id: 5, name: 'Bird Coop', image: '/images/RecNorth.jpg' },
+    { id: 6, name: 'Blue Chip Cafe', image: '/images/BlueChip.jpg' },
 ];
 
 const BrowseLocations = () => {
