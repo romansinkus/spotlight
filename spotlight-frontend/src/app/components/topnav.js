@@ -1,28 +1,30 @@
-import React from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
 
 const TopNav = () => {
     return (
-        <nav className="bg-gray-800 p-4">
+        <nav className="bg-background p-6">
             <div className="container mx-auto flex justify-between items-center">
-                <div className="flex space-x-8">
-                    <Link href="/" className="text-gray-300 hover:text-white">
+                <div className="flex space-x-10">
+                    <h1 className="text-lg font-bold text-black hover:text-white">Spotlight</h1>
+                    <Link href="/" className="text-lg font-bold text-black hover:text-white">
                         Home
                     </Link>
-                    <Link href="/screens/browselocations" className="text-gray-300 hover:text-white">
+                    <Link href="/screens/browselocations" className="text-lg font-bold text-black hover:text-white">
                         Browse
                     </Link>
                 </div>
-                <div className="flex-grow mx-4 flex justify-center">
+                <div className="flex-grow mx-6 flex justify-center">
                     <input
                         type="text"
                         placeholder="Search..."
-                        className="w-1/3 p-2 rounded bg-gray-700 text-white placeholder-gray-400"
+                        className="w-2/3 p-3 bg-white text-black placeholder-gray-400 rounded-full"
                     />
-                </div>
-                <div className="text-gray-300 hover:text-white">
-                    <FaUserCircle size={24} />
+                    <button className="ml-2 p-2 bg-gray-700 rounded-md text-white hover:bg-gray-600">
+                        <FaSearch size={20} />
+                    </button>                </div>
+                <div className="text-black hover:text-white">
+                    <FaUserCircle size={28} />
                 </div>
             </div>
         </nav>
