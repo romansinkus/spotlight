@@ -42,13 +42,14 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="min-h-screen pb-20 sm:p-10 sm:px-64 bg-background">
+        <div className="min-h-screen pb-20 sm:p-10 sm:px-32 bg-background">
             <main className="flex flex-col gap-8 items-center sm:items-start w-full">
                 <WelcomeSection />
 
                 <div className="flex flex-col sm:flex-row gap-8 w-full">
                     <div className="flex flex-col w-2/3 bg-white rounded-lg pb-30 pt-8 pl-8 pr-8">
-                        <VideoPlayer playbackId="88813ytumj696bed" />
+                        {/*<VideoPlayer playbackId="88813ytumj696bed" />*/}
+                        <VideoPlayer playbackId="c1fc9a0i5exr0qlk"/>
                         <VideoDetails personCount={personCount} handleButtonClick={updatePersonCount} capacity={60}
                             title={"Woodward Library 1st Floor"} />
                     </div>
