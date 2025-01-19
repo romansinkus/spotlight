@@ -4,10 +4,17 @@ import { IoMdRefresh } from "react-icons/io";
 
 const VideoDetails = ({ personCount, handleButtonClick, capacity, title }) => {
     const [seatsAvailable, setSeatsAvailable] = useState(capacity - personCount);
+    const [noiseLevel, setNoiseLevel] = useState(0);
+
 
     useEffect(() => {
         setSeatsAvailable(capacity - personCount);
     }, [personCount, capacity]);
+
+
+    useEffect(() => {
+        setNoiseLevel(Math.floor(Math.random() * 76) + 25); // Generate a random value between 25 and 100
+    }, []);
 
     return (
         <div className="rounded-lg border py-4 mb-10 flex">
@@ -24,7 +31,7 @@ const VideoDetails = ({ personCount, handleButtonClick, capacity, title }) => {
                     </div>
                     <div className="text-black mt-4">Noise Level</div>
                     <div className="bg-gray-300 rounded-full h-4 mt-1 w-3/4">
-                        <div className="bg-progress-bar h-4 rounded-full" style={{ width: `${(seatsAvailable / capacity) * 100}%` }}></div>
+                        <div className="bg-progress-bar h-4 rounded-full" style={{ width: `${noiseLevel}%` }}></div>
                     </div>
                 </div>
                 <div className="flex justify-center items-end">
