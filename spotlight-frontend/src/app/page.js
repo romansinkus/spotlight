@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Layout from './layout';
+
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import VideoPlayer from "@/app/components/videoPlayer";
 import WelcomeSection from "./components/welcomesection";
 import LocationCard from "./components/locationcard";
 
@@ -17,9 +20,7 @@ export default function Home() {
         <WelcomeSection />
 
         <div className="flex flex-col sm:flex-row gap-8 w-full">
-          <div className="flex-2 text-4xl font-bold self-start bg-gray-800 text-white p-8 rounded-lg w-2/3">
-            <img src='/images/IKB.jpg' alt='IKB' className="w-full h-100 object-cover rounded-md" />
-          </div>
+          <VideoPlayer playbackId="88813ytumj696bed" />
           <div className="flex-1 bg-white text-black p-10 rounded-3xl w-1/3">
             <h2 className="text-2xl font-bold mb-4">Recommended</h2>
             <div className="flex flex-col gap-4">
