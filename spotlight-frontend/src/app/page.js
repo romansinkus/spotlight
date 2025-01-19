@@ -11,8 +11,8 @@ export default function Home() {
           Hello NWHacks. Welcome to Spotlight.
         </h1>
         <div className="flex flex-col sm:flex-row gap-8 w-full">
-          <div className="flex-2 text-4xl font-bold self-start bg-gray-800 text-white p-4 rounded-lg  w-2/3">
-            <img src='/images/IKB.jpg' alt='IKB' className="w-full h-100 object-cover" />
+          <div className="flex-2 text-4xl font-bold self-start bg-gray-800 text-white p-8 rounded-lg  w-2/3">
+            <img src='/images/IKB.jpg' alt='IKB' className="w-full h-100 object-cover rounded-md" />
           </div>
           <div className="flex-1 bg-gray-800 text-white p-4 rounded-lg w-1/3">
             <h2 className="text-2xl font-bold mb-4">Recommended Study Spots</h2>
