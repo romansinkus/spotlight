@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Layout from './layout';
+import WelcomeSection from "./components/welcomesection";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
 
 export default function Home() {
   return (
-    <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen pb-20 sm:p-10 sm:px-20 font-[family-name:var(--font-geist-sans)] bg-background">
       <main className="flex flex-col gap-8 items-center sm:items-start">
-        <h1 className="text-4xl font-bold self-start bg-gray-800 text-white p-4 rounded-lg">
-          Hello NWHacks. Welcome to Spotlight.
-        </h1>
+        <WelcomeSection />
+
         <div className="flex flex-col sm:flex-row gap-8 w-full">
           <div className="flex-2 text-4xl font-bold self-start bg-gray-800 text-white p-8 rounded-lg  w-2/3">
             <img src='/images/IKB.jpg' alt='IKB' className="w-full h-100 object-cover rounded-md" />
