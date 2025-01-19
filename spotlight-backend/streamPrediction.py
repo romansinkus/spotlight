@@ -1,38 +1,54 @@
-import cv2
+import subprocess
+import numpy as np
 from ultralytics import YOLO
 from ultralytics.engine.results import Results
 
 # Livepeer HLS stream URL
-# livepeer_url = "https://livepeercdn.studio/hls/c1fc9a0i5exr0qlk/index.m3u8" # Roger
-livepeer_url = "https://livepeercdn.studio/hls/88813ytumj696bed/index.m3u8"  # Roman
+livepeer_url = "https://livepeercdn.studio/hls/c1fc9a0i5exr0qlk/index.m3u8"  # Roger
+#livepeer_url = "https://livepeercdn.studio/hls/88813ytumj696bed/index.m3u8"  # Roman
 
-# Initialize YOLOv8 model (use your trained model path or a pretrained one)
-model = YOLO("yolov8m.pt")  # Replace with your model file
+# Initialize YOLOv8 model
+model = YOLO("yolov8m.pt")
 
-# Open the stream with OpenCV
-cap = cv2.VideoCapture(livepeer_url)
+# FFmpeg command to stream frames from HLS
+ffmpeg_cmd = [
+    "ffmpeg",
+    "-i", livepeer_url,              # Input stream
+    "-f", "image2pipe",              # Output as raw image stream
+    "-pix_fmt", "bgr24",             # Pixel format for OpenCV
+    "-vcodec", "rawvideo",           # Output raw video
+    "-an",                           # Disable audio
+    "-sn",                           # Disable subtitles
+    "-"                              # Write to stdout
+]
 
-if not cap.isOpened():
-    print("Error: Unable to open the video stream.")
-    exit()
+# Open FFmpeg subprocess
+process = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=10**8)
+
+# Frame dimensions (adjust based on the HLS stream resolution)
+frame_width, frame_height = 1280, 720
+frame_size = frame_width * frame_height * 3  # 3 channels for RGB
 
 # Set up frame update interval (X frames)
 frame_counter = 0
 update_interval = 45  # Update every 45 frames
 
-# Process the stream
 while True:
-    ret, frame = cap.read()
-    if not ret:
+    # Read raw frame data from FFmpeg stdout
+    raw_frame = process.stdout.read(frame_size)
+    if not raw_frame:
         print("Stream ended or cannot fetch frame.")
         break
+
+    # Convert raw frame to a numpy array
+    frame = np.frombuffer(raw_frame, np.uint8).reshape((frame_height, frame_width, 3))
 
     # Increment frame counter
     frame_counter += 1
 
+    # Perform YOLO object detection every 'update_interval' frames
     if frame_counter >= update_interval:
-        # Perform object detection with the YOLOv8 model
-        results = model(frame)  # Frame is passed to the model for inference
+        results = model(frame)  # Perform detection on the current frame
 
         person_count = 0
         for result in results:  # Iterate over the results (detections)
