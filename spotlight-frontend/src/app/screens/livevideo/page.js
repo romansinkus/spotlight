@@ -4,6 +4,7 @@ import Layout from '../../layout';
 import VideoPlayer from "@/app/components/videoPlayer";
 import Comments from "@/app/components/comments";
 import { useState } from 'react';
+import VericalHours from "@/app/components/verticalhours";
 
 
 export default function IKBLive() {
