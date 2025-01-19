@@ -34,13 +34,13 @@ export default function Home() {
     };
 
     useEffect(() => {
-        updatePersonCount().then(r => {});
+        updatePersonCount(); // Fetch and update person count
     }, []);
 
-    return (
-        <div className="min-h-screen pb-20 sm:p-10 sm:px-32 font-[family-name:var(--font-geist-sans)] bg-background">
-            <main className="flex flex-col gap-8 items-center sm:items-start w-full">
-                <WelcomeSection/>
+  return (
+    <div className="min-h-screen pb-20 sm:p-10 sm:px-64 bg-background">
+      <main className="flex flex-col gap-8 items-center sm:items-start w-full">
+        <WelcomeSection />
 
                 <div className="flex flex-col sm:flex-row gap-8 w-full">
                     <div className="flex flex-col w-2/3 bg-white rounded-lg pb-30 pt-8 pl-8 pr-8">
@@ -49,7 +49,7 @@ export default function Home() {
                                       title={"Woodward Library 1st Floor"}/>
                     </div>
                     <div className="flex-1 bg-white text-black p-10 rounded-lg w-full sm:w-1/3">
-                        <h2 className="text-2xl font-bold mb-4">Recommended</h2>
+                        <h2 className="text-2xl mb-4">Recommended</h2>
                         <div className="flex flex-col gap-4">
                             {locations.map(location => (
                                 <Link key={location.id} href='/screens/livevideo'>

@@ -15,7 +15,6 @@ stream_running = True  # To safely stop the stream processing thread
 def process_stream():
     global latest_person_count, stream_running
 
-    temp_url = image_url = "https://recordings-cdn-s.lp-playback.studio/hls/c1fc9a0i5exr0qlk/fef27bf9-0eb2-46be-82ef-1b04ddd338f8/source/latest.png"
     stream_processor = sp.StreamProcessor(model_path="yolov8m.pt", interval=10)
 
     while stream_running:
