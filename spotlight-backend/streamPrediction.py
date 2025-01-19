@@ -5,11 +5,11 @@ from ultralytics import YOLO
 import io
 import time
 
-class ImageProcessor:
-    def __init__(self, model_path, image_url, interval=15):
+class StreamProcessor:
+    def __init__(self, model_path, url, interval):
         # Initialize the YOLOv8 model
         self.model = YOLO(model_path)  # Replace with the path to your model file
-        self.image_url = image_url
+        self.url = url
         self.interval = interval  # Interval to fetch and process the image (in seconds)
         self.person_count = 0  # To store the number of detected people
 
@@ -17,7 +17,7 @@ class ImageProcessor:
         """Fetch the latest image and run detection."""
         try:
             # Fetch the PNG image from the URL
-            response = requests.get(self.image_url)
+            response = requests.get(self.url)
 
             # Ensure the request was successful
             if response.status_code == 200:
@@ -53,8 +53,8 @@ class ImageProcessor:
             self.fetch_and_process_image()  # Fetch and process the image
             time.sleep(self.interval)  # Wait before fetching the next image
 
-    def get_count(self):
-        """Get the count of the number of people"""
+    def get_person_count(self):
+        """Getter for person_count."""
         return self.person_count
 
 # Example usage:
@@ -62,8 +62,8 @@ if __name__ == "__main__":
     # URL for the latest PNG
     image_url = "https://recordings-cdn-s.lp-playback.studio/hls/c1fc9a0i5exr0qlk/fef27bf9-0eb2-46be-82ef-1b04ddd338f8/source/latest.png"
     
-    # Initialize the ImageProcessor with your YOLO model path and image URL
-    image_processor = ImageProcessor(model_path="yolov8m.pt", image_url=image_url, interval=10)
+    # Initialize the StreamProcessor with your YOLO model path and image URL
+    stream_processor = StreamProcessor(model_path="yolov8m.pt", url=image_url, interval=10)
     
     # Start processing
-    image_processor.start_processing()
+    stream_processor.start_processing()
