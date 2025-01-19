@@ -33,8 +33,12 @@ export default function Home() {
         }
     };
 
+    // useEffect(() => {
+    //     updatePersonCount().then(r => {});
+    // }, []);
+
     useEffect(() => {
-        updatePersonCount().then(r => {});
+        updatePersonCount(); // Fetch and update person count
     }, []);
 
     return (
