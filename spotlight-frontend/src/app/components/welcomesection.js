@@ -7,13 +7,13 @@ const WelcomeSection = () => {
 
     return (
         <div className="w-full flex flex-col sm:flex-row items-start sm:items-center bg-welcome-colour rounded-xl p-8">
-            <div className="flex flex-col items-start flex-grow">
+            <div className="flex flex-col items-start flex-grow w-full h-28">
                 <h1 className="text-4xl font-bold text-black p-4">
                     <TypingEffect text="Hello NWHacks. Welcome to Spotlight!" delay={100} onComplete={() => setTypingComplete(true)} />
                 </h1>
                 {typingComplete && (
                     <h2 className="text-lg text-black p-4 pt-0">
-                        Let us help you navigate your daily adventures.
+                        <TypingEffect text="Let us help you navigate your daily adventures." delay={100}></TypingEffect>
                     </h2>
                 )}
             </div>
