@@ -2,6 +2,16 @@ import React from 'react';
 
 const HourlyUpdates = () => {
     const times = ['9 AM', '12 PM', '3 PM', '6 PM', '9 PM'];
+    const days = [
+        { day: 'Mon', isSelected: false },
+        { day: 'Tue', isSelected: false },
+        { day: 'Wed', isSelected: false },
+        { day: 'Thu', isSelected: false },
+        { day: 'Fri', isSelected: false },
+        { day: 'Sat', isSelected: false },
+        { day: 'Sun', isSelected: true },
+    ];
+
     const hours = '8:00 AM - 10:00 PM';
 
     // Function to generate values following a normal distribution
@@ -23,6 +33,7 @@ const HourlyUpdates = () => {
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-4">Popular Times Today</h2>
+
             <div className="flex flex-col space-y-4">
                 {times.map((time, index) => (
                     <div key={index} className="flex items-center space-x-4">

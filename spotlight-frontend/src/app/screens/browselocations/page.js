@@ -24,7 +24,7 @@ const BrowseLocations = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {locations.map(location => (
                     <div key={location.id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                        <Link href='/screens/livevideo'>
+                        <Link href='/screens/IKBLive'>
                             <img
                                 src={location.image}
                                 alt={location.name}

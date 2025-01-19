@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const VerticalHours = () => {
     const times = ['9 AM', '12 PM', '3 PM', '6 PM', '9 PM'];
+    const days = [
+        { day: 'Mon', isSelected: false },
+        { day: 'Tue', isSelected: false },
+        { day: 'Wed', isSelected: false },
+        { day: 'Thu', isSelected: false },
+        { day: 'Fri', isSelected: false },
+        { day: 'Sat', isSelected: false },
+        { day: 'Sun', isSelected: true },
+    ];
+
     const hours = '8:00 AM - 10:00 PM';
 
     // Function to generate values following a normal distribution
@@ -18,23 +28,29 @@ const VerticalHours = () => {
         return values;
     };
 
-    const barHeights = generateNormalDistribution(50, 15, times.length);
+    const barWidths = generateNormalDistribution(50, 15, times.length);
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">Popular Times Today</h2>
-            <div className="flex justify-between items-end h-64">
+        <div className="bg-white p-2 rounded-lg">
+            <div className="flex justify-between items-center mt-4 mb-2 ">
+                {days.map(({ day, isSelected }) => (
+                    <button
+                        key={day}
+                        className={`py-1 px-2 rounded-full h-8 w-16 ${isSelected ? 'bg-black text-white' : 'bg-white text-black'}`}
+                    >
+                        {day}
+                    </button>
+                ))}
+            </div>
+            <div className="flex flex-col space-y-4">
                 {times.map((time, index) => (
                     <div key={index} className="flex items-center space-x-4">
-                        <div className="w-1/6 text-lg font-semibold">{time}</div>
-                        <div className="w-5/6 bg-gray-200 rounded-full h-4">
-                            <div className="bg-blue-500 h-4 rounded-full" style={{ height: `${barHeights[index]}%` }}></div>
+                        <div className="w-1/6 text-md font-semibold">{time}</div>
+                        <div className="w-5/6 bg-gray-200 rounded-full h-2">
+                            <div className="bg-progress-bar h-2 rounded-full" style={{ width: `${barWidths[index]}%` }}></div>
                         </div>
                     </div>
                 ))}
-            </div>
-            <div className="mt-4 text-lg font-semibold">
-                Library Hours: {hours}
             </div>
         </div>
     );

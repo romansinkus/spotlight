@@ -7,15 +7,19 @@ import WelcomeSection from "./components/welcomesection";
 import LocationCard from "./components/locationcard";
 import Link from 'next/link';
 import VideoDetails from "@/app/components/videoDetails";
-
+import HourlyUpdates from './components/hourlyupdatecard';
+import BlueChip
+    from './screens/BlueChip/page';
 export default function Home() {
     const [personCount, setPersonCount] = useState(0);
 
     const locations = [
-        { id: 1, name: 'Blue Chip', src: '/images/BlueChip.jpg', progress: '70%' },
-        { id: 2, name: 'The Nest', src: '/images/Nest.jpg', progress: '50%' },
-        { id: 3, name: 'Woodward Library', src: '/images/Woodward.jpg', progress: '90%' },
-        { id: 4, name: 'Koerner Library', src: '/images/Koerner.jpg', progress: '15%' },
+        { id: 1, name: 'Blue Chip', src: '/images/BlueChip.jpg', progress: '70%', playbackId: '88813ytumj696bed' },
+        { id: 2, name: 'Life Sciences Institute', src: '/images/LifeScience.jpg', progress: '95%', playbackId: '88813ytumj696bed' },
+        { id: 3, name: 'The Nest', src: '/images/Nest.jpg', progress: '50%', playbackId: '88813ytumj696bed' },
+        { id: 4, name: 'Woodward Library', src: '/images/Woodward.jpg', progress: '90%', playbackId: '88813ytumj696bed' },
+        { id: 5, name: 'Forestry Building', src: '/images/Forestry.jpg', progress: '15%', playbackId: '88813ytumj696bed' },
+        { id: 6, name: 'Loafe Cafe', src: '/images/Loafe.jpg', progress: '30%', playbackId: '88813ytumj696bed' },
     ];
 
     const updatePersonCount = async () => {
@@ -50,9 +54,10 @@ export default function Home() {
                     </div>
                     <div className="flex-1 bg-white text-black p-10 rounded-lg w-full sm:w-1/3">
                         <h2 className="text-2xl font-bold mb-4">Recommended</h2>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-8">
                             {locations.map(location => (
-                                <Link key={location.id} href='/screens/livevideo'>
+                                <Link key={location.id}
+                                    href={`/screens/${location.name.replace(/\s+/g, '')}`}>
                                     <LocationCard location={location} />
                                 </Link>))}
                         </div>
