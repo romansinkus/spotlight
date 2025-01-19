@@ -18,7 +18,7 @@ const TopNav = () => {
                     <input
                         type="text"
                         placeholder="Search..."
-                        className="w-2/3 p-3 rounded-md bg-white text-black placeholder-gray-400"
+                        className="w-2/3 p-3 bg-white text-black placeholder-gray-400 rounded-full"
                     />
                     <button className="ml-2 p-2 bg-gray-700 rounded-md text-white hover:bg-gray-600">
                         <FaSearch size={20} />
