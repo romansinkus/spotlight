@@ -3,17 +3,32 @@ import HourlyUpdates from "@/app/components/hourlyupdatecard";
 import Layout from '../../layout';
 import VideoPlayer from "@/app/components/videoPlayer";
 import Comments from "@/app/components/comments";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import VericalHours from "@/app/components/verticalhours";
+import VideoDetails from "@/app/components/videoDetails";
 
-
-export default function LSILive() {
-
+export default function BlueChip() {
+    const [personCount, setPersonCount] = useState(0);
     const [counter, setCounter] = useState(0);
 
-    const handleButtonClick = () => {
-        setCounter(counter + 1);
-    }
+    const updatePersonCount = async () => {
+        try {
+            // Send a request to your Flask API to get the person count
+            const response = await fetch('http://127.0.0.1:5000/person_count'); // Update the URL if necessary
+            if (response.ok) {
+                const data = await response.json();
+                setPersonCount(data.person_count);
+            } else {
+                console.error('Failed to fetch person count:', response.status);
+            }
+        } catch (error) {
+            console.error('Error while fetching person count:', error);
+        }
+    };
+
+    useEffect(() => {
+        updatePersonCount().then(r => { });
+    }, []);
 
     return (
         <div className="min-h-screen p-0 px-20 font-[family-name:var(--font-geist-sans)]">
@@ -27,25 +42,13 @@ export default function LSILive() {
                     <button className="bg-white text-black py-2 px-4 rounded-full w-64">Room 1003</button>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-8 w-full">
-                    <div className="flex flex-col w-2/3 bg-white rounded-lg pb-40 pt-8 pl-8 pr-8">
+                    <div className="flex flex-col w-2/3 bg-white rounded-lg pt-8 pl-8 pr-8">
                         <VideoPlayer playbackId="88813ytumj696bed" />
-                        <div className="bg-gray-500 border rounded-lg border-gray-500 mt-8 py-10 flex-grow flex justify-end">
-                            <div className="text-white ml-4">Counter: {counter}</div>
-                            <button
-                                className="bg-black text-white py-4 px-8 text-lg rounded-full hover:bg-blue-600 m-2"
-                                onClick={handleButtonClick}
-                            >
-                                Refresh
-                            </button>
-                        </div>
+                        <VideoDetails personCount={personCount} handleButtonClick={updatePersonCount} capacity={60}
+                            title={"Life Sciences Institute - Atrium 1"} />
                     </div>
-                    <div className="flex flex-col gap-8 w-full sm:w-1/3 text-black">
-                        <div className="flex-1  p-4 rounded-lg">
-                            <HourlyUpdates />
-                        </div>
-                        <div className="flex-1  p-4 rounded-lg">
-                            <Comments />
-                        </div>
+                    <div className="flex-1  p-4 rounded-lg">
+                        <Comments />
                     </div>
                 </div>
             </main>
