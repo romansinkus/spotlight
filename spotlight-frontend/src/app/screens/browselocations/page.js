@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../../layout';
 import Link from 'next/link';
 import { FiHeart } from "react-icons/fi";
 
@@ -14,8 +13,8 @@ const locations = [
 
 const BrowseLocations = () => {
     return (
-        <Layout>
-            <div className="bg-background container mx-auto p-4">
+        <div className="bg-background">
+            <div className="container mx-auto p-4">
                 <h1 className="text-2xl font-bold mb-6">Browse Locations On Campus</h1>
                 <div className="flex gap-4 mb-6">
                     <button className="bg-filter hover:opacity-70 py-1 px-6 rounded-full">All</button>
@@ -49,7 +48,7 @@ const BrowseLocations = () => {
                     ))}
                 </div>
             </div>
-        </Layout>
+        </div>
     );
 };
 
