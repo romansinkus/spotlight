@@ -1,65 +1,49 @@
-import subprocess
+import requests
 import numpy as np
+from PIL import Image
 from ultralytics import YOLO
-from ultralytics.engine.results import Results
-
-# Livepeer HLS stream URL
-livepeer_url = "https://livepeercdn.studio/hls/c1fc9a0i5exr0qlk/index.m3u8"  # Roger
-#livepeer_url = "https://livepeercdn.studio/hls/88813ytumj696bed/index.m3u8"  # Roman
+import io
+import time
 
 # Initialize YOLOv8 model
-model = YOLO("yolov8m.pt")
+model = YOLO("yolov8m.pt") 
 
-# FFmpeg command to stream frames from HLS with a frame rate filter
-ffmpeg_cmd = [
-    "ffmpeg",
-    "-i", livepeer_url,              # Input stream
-    "-vf", "fps=0.5",                  # Capture one frame per second (adjust as needed)
-    "-f", "image2pipe",              # Output as raw image stream
-    "-pix_fmt", "bgr24",             # Pixel format for OpenCV
-    "-vcodec", "rawvideo",           # Output raw video
-    "-an",                           # Disable audio
-    "-sn",                           # Disable subtitles
-    "-"                              # Write to stdout
-]
+# URL for the latest PNG
+image_url = "https://recordings-cdn-s.lp-playback.studio/hls/c1fc9a0i5exr0qlk/fef27bf9-0eb2-46be-82ef-1b04ddd338f8/source/latest.png"
 
-# Open FFmpeg subprocess
-process = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=10**8)
+def fetch_and_process_image():
+    try:
+        # Fetch the PNG image from the URL
+        response = requests.get(image_url)
 
-# Frame dimensions (adjust based on the HLS stream resolution)
-frame_width, frame_height = 1280, 720
-frame_size = frame_width * frame_height * 3  # 3 channels for RGB
+        # Ensure the request was successful
+        if response.status_code == 200:
+            # Convert the image data to a PIL image
+            image_data = io.BytesIO(response.content)
+            image = Image.open(image_data)
 
-# Frame update interval (X seconds)
-frame_counter = 0
-update_interval = 5  # Update every 90 frames or adjust as needed
+            # Convert the PIL image to a numpy array (OpenCV format)
+            frame = np.array(image)
 
+            # Perform object detection with YOLOv8 model
+            results = model(frame)  # Perform detection on the current frame
+
+            # Process results: Counting detected people (class_id 0 corresponds to 'person')
+            person_count = 0
+            for result in results:  # Iterate over the results (detections)
+                for box in result.boxes:  # Each 'box' corresponds to a detected object
+                    class_id = int(box.cls)  # Class ID of the detected object
+                    if class_id == 0:  # Check if the detected object is a 'person' (class_id = 0)
+                        person_count += 1
+
+            print(f"Number of people detected: {person_count}")
+        else:
+            print(f"Failed to fetch image, status code: {response.status_code}")
+
+    except Exception as e:
+        print(f"Error fetching or processing image: {e}")
+
+# Run the fetch-and-process task periodically (every minute in this case)
 while True:
-    # Read raw frame data from FFmpeg stdout
-    raw_frame = process.stdout.read(frame_size)
-    if not raw_frame:
-        print("Stream ended or cannot fetch frame.")
-        break
-
-    # Convert raw frame to a numpy array
-    frame = np.frombuffer(raw_frame, np.uint8).reshape((frame_height, frame_width, 3))
-
-    # Increment frame counter
-    frame_counter += 1
-
-    # Perform YOLO object detection every 'update_interval' frames
-    if frame_counter >= update_interval:
-        results = model(frame)  # Perform detection on the current frame
-
-        person_count = 0
-        for result in results:  # Iterate over the results (detections)
-            for box in result.boxes:  # Each 'box' corresponds to a detected object
-                class_id = int(box.cls)  # Class ID of the detected object
-                if class_id == 0:  # Check if the detected object is a 'person' (class_id = 0)
-                    person_count += 1
-
-        # Output the number of people detected in the frame
-        print(f"Number of people detected: {person_count}")
-
-        # Reset the frame counter after update
-        frame_counter = 0
+    fetch_and_process_image()  # Fetch and process the image
+    time.sleep(15)  # Wait for 60 seconds before fetching again
