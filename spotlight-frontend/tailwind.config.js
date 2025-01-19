@@ -6,8 +6,12 @@ module.exports = {
       colors: {
         'background': '#E2E2E2',
         'welcome-colour': '#FBFF86',
-        'progress-bar': '#B99FCE'
-      }
+        'progress-bar': '#B99FCE',
+        'select-colour': '#B0D4B0'
+      },
+      height: {
+        '128': '32rem', // Add this line to define h-128
+      },
     },
   },
   plugins: [],
