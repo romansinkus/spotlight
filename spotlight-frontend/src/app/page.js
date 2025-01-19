@@ -4,6 +4,7 @@ import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import VideoPlayer from "@/app/components/videoPlayer";
 import WelcomeSection from "./components/welcomesection";
 import LocationCard from "./components/locationcard";
+import Link from 'next/link';
 
 export default function Home() {
   const [counter, setCounter] = useState(0);
@@ -41,8 +42,9 @@ export default function Home() {
             <h2 className="text-2xl font-bold mb-4">Recommended</h2>
             <div className="flex flex-col gap-4">
               {locations.map(location => (
-                <LocationCard key={location.id} location={location} />
-              ))}
+                <Link key={location.id} href='/screens/livevideo'>
+                  <LocationCard location={location} />
+                </Link>))}
             </div>
           </div>
         </div>
