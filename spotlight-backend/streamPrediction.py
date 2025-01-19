@@ -15,7 +15,7 @@ class StreamProcessor:
         # Initialize the YOLOv8 model
         self.model = YOLO(model_path) 
         self.interval = interval  # Interval to fetch and process the image (in seconds)
-        self.stream_count = []  # To store the number of detected people and the playbackID
+        self.stream_data = {}  # To store the number of detected people and the playbackID
         self.livepeer = livepeer.Livepeer(api_key="10a3ce65-6d6b-494c-8fee-0dd9d83fd794")
         self.data = []
 
@@ -45,7 +45,7 @@ class StreamProcessor:
                         if class_id == 0:  # Check if the detected object is a 'person' (class_id = 0)
                             person_count += 1
 
-                self.stream_count = [person_count, playbackID]
+                self.stream_data[playbackID] = person_count
                 print(f"Number of people detected: {person_count}. playbackID: {playbackID}")
             else:
                 print(f"Failed to fetch image, status code: {response.status_code}")
@@ -77,19 +77,27 @@ class StreamProcessor:
         return url_list
 
     def start_processing(self):
-        """Start the image fetching and processing task periodically."""
-        while True:
-            self.data = self.get_streams()
-            if self.data:
-                for stream in self.data:
-                    self.fetch_and_process_image(playbackID=stream[0], url=stream[1])  # Fetch and process the image
-            else:
-                print("No Data Yet")
-            time.sleep(self.interval)  # Wait before fetching the next image
+        """Process image batches extracted from each stream"""
 
-    def get_stream_data(self):
-        """Getter for person_count in the form of [count, playbackID]"""
-        return self.stream_count
+        # Reset stream data for new batch of frames
+        self.stream_data = {}
+
+        self.data = self.get_streams()
+        if self.data:
+            for stream in self.data:
+                self.fetch_and_process_image(playbackID=stream[0], url=stream[1])  # Fetch and process the image
+        else:
+            print("No Data Yet")
+        print(self.stream_data)
+        time.sleep(self.interval)  # Wait before fetching the next image
+    
+    def get_count(self, playbackID):
+        try:
+            count = self.stream_data[playbackID]
+            return count
+        except:
+            print("Count does not exist for playbackID")
+
 
 # Example usage:
 if __name__ == "__main__":
@@ -97,4 +105,7 @@ if __name__ == "__main__":
     stream_processor = StreamProcessor(model_path="yolov8m.pt", interval=10)
     
     # Start processing
-    stream_processor.start_processing()
+    while True:
+        stream_processor.start_processing()
+        people = stream_processor.get_count("c1fc9a0i5exr0qlk")
+        print(f"Person Count: {people}")
