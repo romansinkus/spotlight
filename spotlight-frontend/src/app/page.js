@@ -1,19 +1,18 @@
 import Image from "next/image";
 import Layout from './layout';
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import VideoPlayer from "@/app/components/videoPlayer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 items-center sm:items-start">
+    <div className="min-h-screen p-8 pb-20 sm:p-10 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-8 items-center sm:items-start max-w-screen-lg mx-auto">
         <h1 className="text-4xl font-bold self-start bg-gray-800 text-white p-4 rounded-lg">
           Hello NWHacks. Welcome to Spotlight.
         </h1>
         <div className="flex flex-col sm:flex-row gap-8 w-full">
-          <div className="flex-2 text-4xl font-bold self-start bg-gray-800 text-white p-8 rounded-lg  w-2/3">
-            <img src='/images/IKB.jpg' alt='IKB' className="w-full h-100 object-cover rounded-md" />
-          </div>
+          <VideoPlayer playbackId="88813ytumj696bed"/>
           <div className="flex-1 bg-gray-800 text-white p-4 rounded-lg w-1/3">
             <h2 className="text-2xl font-bold mb-4">Recommended Study Spots</h2>
             <div className="flex flex-col gap-4">
