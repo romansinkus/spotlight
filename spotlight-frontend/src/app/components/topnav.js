@@ -5,7 +5,8 @@ const TopNav = () => {
     return (
         <nav className="bg-background p-6">
             <div className="container mx-auto flex justify-between items-center">
-                <div className="flex space-x-10">
+                <div className="flex items-center space-x-10">
+                    <img src="/images/spotlightLogo.png" alt="Spotlight Logo" className="w-10 h-10" />
                     <h1 className="text-lg font-bold text-black hover:text-white">Spotlight</h1>
                     <Link href="/" className="text-lg font-bold text-black hover:text-white">
                         Home
@@ -14,17 +15,18 @@ const TopNav = () => {
                         Browse
                     </Link>
                 </div>
-                <div className="flex-grow mx-6 flex justify-center">
+                <div className="flex items-center space-x-4">
                     <input
                         type="text"
                         placeholder="Search..."
-                        className="w-2/3 p-3 bg-white text-black placeholder-gray-400 rounded-full"
+                        className="w-2/3 p-2 px-8 bg-white text-black placeholder-gray-400 rounded-full"
                     />
-                    <button className="ml-2 p-2 bg-gray-700 rounded-md text-white hover:bg-gray-600">
+                    <button className="p-2 bg-gray-700 rounded-md text-white hover:bg-gray-600">
                         <FaSearch size={20} />
-                    </button>                </div>
-                <div className="text-black hover:text-white">
-                    <FaUserCircle size={28} />
+                    </button>
+                    <div className="text-black hover:text-white">
+                        <FaUserCircle size={28} />
+                    </div>
                 </div>
             </div>
         </nav>

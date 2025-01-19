@@ -21,7 +21,7 @@ export default function Layout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
         <TopNav />
         {children}
@@ -29,3 +29,4 @@ export default function Layout({ children }) {
     </html>
   );
 }
+
