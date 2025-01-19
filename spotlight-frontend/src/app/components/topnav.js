@@ -6,12 +6,11 @@ const TopNav = () => {
         <nav className="bg-background p-6">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-10">
-                    <img src="/images/spotlightLogo.png" alt="Spotlight Logo" className="w-10 h-10" />
-                    <h1 className="text-lg font-bold text-black hover:text-white">Spotlight</h1>
-                    <Link href="/" className="text-lg font-bold text-black hover:text-white">
+                    <img src="/images/spotlightLogo.svg" alt="Spotlight Logo" className="h-9" />
+                    <Link href="/" className="text-lg font-medium text-black hover:text-white">
                         Home
                     </Link>
-                    <Link href="/screens/browselocations" className="text-lg font-bold text-black hover:text-white">
+                    <Link href="/screens/browselocations" className="text-lg font-medium text-black hover:text-white">
                         Browse
                     </Link>
                 </div>

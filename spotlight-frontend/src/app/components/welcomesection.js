@@ -62,8 +62,8 @@ const WelcomeSection = () => {
                 </h2>
             </div>
             <div className="p-16 rounded-lg sm:p-0 sm:ml-4 mr-4">
-                <button className="bg-black text-white py-4 px-8 text-lg rounded-full hover:bg-blue-600">
-                    Find your Spot
+                <button className="bg-black text-white font-medium py-4 px-8 text-xl rounded-full hover:bg-blue-600">
+                    Find your Seat
                     <FaArrowRight className="inline ml-2" />
                 </button>
             </div>
