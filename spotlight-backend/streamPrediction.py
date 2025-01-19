@@ -10,10 +10,11 @@ livepeer_url = "https://livepeercdn.studio/hls/c1fc9a0i5exr0qlk/index.m3u8"  # R
 # Initialize YOLOv8 model
 model = YOLO("yolov8m.pt")
 
-# FFmpeg command to stream frames from HLS
+# FFmpeg command to stream frames from HLS with a frame rate filter
 ffmpeg_cmd = [
     "ffmpeg",
     "-i", livepeer_url,              # Input stream
+    "-vf", "fps=0.5",                  # Capture one frame per second (adjust as needed)
     "-f", "image2pipe",              # Output as raw image stream
     "-pix_fmt", "bgr24",             # Pixel format for OpenCV
     "-vcodec", "rawvideo",           # Output raw video
@@ -29,9 +30,9 @@ process = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.PIPE, stderr=subprocess
 frame_width, frame_height = 1280, 720
 frame_size = frame_width * frame_height * 3  # 3 channels for RGB
 
-# Set up frame update interval (X frames)
+# Frame update interval (X seconds)
 frame_counter = 0
-update_interval = 45  # Update every 45 frames
+update_interval = 5  # Update every 90 frames or adjust as needed
 
 while True:
     # Read raw frame data from FFmpeg stdout
