@@ -14,6 +14,9 @@ module.exports = {
       height: {
         '128': '32rem', // Add this line to define h-128
       },
+      fontFamily: {
+        futura: ['Futura', 'sans-serif'],
+      },
     },
   },
   plugins: [],

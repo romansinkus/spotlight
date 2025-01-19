@@ -15,7 +15,7 @@ const BrowseLocations = () => {
     return (
         <div className="bg-background">
             <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-6">Browse Locations On Campus</h1>
+                <h1 className="text-2xl font-medium mb-6">Browse Locations On Campus</h1>
                 <div className="flex gap-4 mb-6">
                     <button className="bg-filter hover:opacity-70 py-1 px-6 rounded-full">All</button>
                     <button className="bg-white hover:opacity-70 py-1 px-6 rounded-full">Libraries</button>
@@ -40,7 +40,7 @@ const BrowseLocations = () => {
                                         </div>
                                         <p className='self-end font-medium'>50% full</p>
                                     </div>
-                                    <h2 className="text-xl font-semibold">{location.name}</h2>
+                                    <h2 className="text-xl font-medium">{location.name}</h2>
                                 </div>
                                 <div className='justify-items-end self-end'><FiHeart size={24}/></div>
                             </div>

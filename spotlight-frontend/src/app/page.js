@@ -21,7 +21,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-20 sm:p-10 sm:px-64 font-[family-name:var(--font-geist-sans)] bg-background">
+    <div className="min-h-screen pb-20 sm:p-10 sm:px-64 bg-background">
       <main className="flex flex-col gap-8 items-center sm:items-start w-full">
         <WelcomeSection />
 
@@ -39,7 +39,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex-1 bg-white text-black p-10 rounded-3xl w-full sm:w-1/3">
-            <h2 className="text-2xl font-bold mb-4">Recommended</h2>
+            <h2 className="text-2xl mb-4">Recommended</h2>
             <div className="flex flex-col gap-4">
               {locations.map(location => (
                 <Link key={location.id} href='/screens/livevideo'>
