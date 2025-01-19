@@ -25,12 +25,12 @@ const BrowseLocations = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {locations.map(location => (
                         <div key={location.id} className="rounded-2xl overflow-hidden bg-transparent group">
-                            <Link href='screens\livevideo'>
-                                    <img
-                                        src={location.image}
-                                        alt={location.name}
-                                        className="w-full h-56 object-cover cursor-pointer rounded-2xl group-hover:opacity-70"
-                                    />
+                            <Link href='/screens/IKBLive'>
+                                <img
+                                    src={location.image}
+                                    alt={location.name}
+                                    className="w-full h-56 object-cover cursor-pointer rounded-2xl group-hover:opacity-70"
+                                />
                             </Link>
                             <div className="py-4 w-full grid grid-cols-3 gap-4">
                                 <div className='col-span-2'>
@@ -42,7 +42,7 @@ const BrowseLocations = () => {
                                     </div>
                                     <h2 className="text-xl font-medium">{location.name}</h2>
                                 </div>
-                                <div className='justify-items-end self-end'><FiHeart size={24}/></div>
+                                <div className='justify-items-end self-end'><FiHeart size={24} /></div>
                             </div>
                         </div>
                     ))}
