@@ -4,20 +4,26 @@ from PIL import Image
 from ultralytics import YOLO
 import io
 import time
+import os
+import json
+import livepeer
+
+api_key = os.getenv('API_KEY')
 
 class StreamProcessor:
-    def __init__(self, model_path, url, interval):
+    def __init__(self, model_path,interval):
         # Initialize the YOLOv8 model
-        self.model = YOLO(model_path)  # Replace with the path to your model file
-        self.url = url
+        self.model = YOLO(model_path) 
         self.interval = interval  # Interval to fetch and process the image (in seconds)
-        self.person_count = 0  # To store the number of detected people
+        self.stream_count = []  # To store the number of detected people and the playbackID
+        self.livepeer = livepeer.Livepeer(api_key="10a3ce65-6d6b-494c-8fee-0dd9d83fd794")
+        self.data = []
 
-    def fetch_and_process_image(self):
+    def fetch_and_process_image(self, url, playbackID):
         """Fetch the latest image and run detection."""
         try:
             # Fetch the PNG image from the URL
-            response = requests.get(self.url)
+            response = requests.get(url)
 
             # Ensure the request was successful
             if response.status_code == 200:
@@ -39,31 +45,56 @@ class StreamProcessor:
                         if class_id == 0:  # Check if the detected object is a 'person' (class_id = 0)
                             person_count += 1
 
-                self.person_count = person_count
-                print(f"Number of people detected: {self.person_count}")
+                self.stream_count = [person_count, playbackID]
+                print(f"Number of people detected: {person_count}. playbackID: {playbackID}")
             else:
                 print(f"Failed to fetch image, status code: {response.status_code}")
 
         except Exception as e:
             print(f"Error fetching or processing image: {e}")
 
+    def generate_urls(self, playbackID):
+        meta_data = self.livepeer.playback.get(id=playbackID).playback_info.meta
+        live = bool(meta_data.live)
+
+        if live:
+            url = meta_data.source[2].url # PNG Url
+            return [playbackID, url]
+        else:
+            return None
+
+    def get_streams(self):
+        url_list = []
+        data = self.livepeer.stream.get_all().data
+
+        for i in data:
+            id = i.playback_id
+            if id is not None:
+                data = self.generate_urls(id)
+                if data:
+                    url_list.append(data)
+
+        return url_list
+
     def start_processing(self):
         """Start the image fetching and processing task periodically."""
         while True:
-            self.fetch_and_process_image()  # Fetch and process the image
+            self.data = self.get_streams()
+            if self.data:
+                for stream in self.data:
+                    self.fetch_and_process_image(playbackID=stream[0], url=stream[1])  # Fetch and process the image
+            else:
+                print("No Data Yet")
             time.sleep(self.interval)  # Wait before fetching the next image
 
-    def get_person_count(self):
-        """Getter for person_count."""
-        return self.person_count
+    def get_stream_data(self):
+        """Getter for person_count in the form of [count, playbackID]"""
+        return self.stream_count
 
 # Example usage:
 if __name__ == "__main__":
-    # URL for the latest PNG
-    image_url = "https://recordings-cdn-s.lp-playback.studio/hls/c1fc9a0i5exr0qlk/fef27bf9-0eb2-46be-82ef-1b04ddd338f8/source/latest.png"
-    
     # Initialize the StreamProcessor with your YOLO model path and image URL
-    stream_processor = StreamProcessor(model_path="yolov8m.pt", url=image_url, interval=10)
+    stream_processor = StreamProcessor(model_path="yolov8m.pt", interval=10)
     
     # Start processing
     stream_processor.start_processing()
