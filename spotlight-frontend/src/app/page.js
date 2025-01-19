@@ -38,11 +38,11 @@ export default function Home() {
     };
 
     useEffect(() => {
-        updatePersonCount().then(r => { });
+        updatePersonCount(); // Fetch and update person count
     }, []);
 
     return (
-        <div className="min-h-screen pb-20 sm:p-10 sm:px-64 font-[family-name:var(--font-geist-sans)] bg-background">
+        <div className="min-h-screen pb-20 sm:p-10 sm:px-64 bg-background">
             <main className="flex flex-col gap-8 items-center sm:items-start w-full">
                 <WelcomeSection />
 

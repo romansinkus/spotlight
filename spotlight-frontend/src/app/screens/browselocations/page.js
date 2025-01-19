@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../../layout';
 import Link from 'next/link';
+import { FiHeart } from "react-icons/fi";
 
 const locations = [
     { id: 1, name: 'Irving K Barber Library', image: '/images/IKB.jpg' },
@@ -13,28 +13,40 @@ const locations = [
 
 const BrowseLocations = () => {
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Browse Locations On Campus</h1>
-            <div className="flex gap-4 mb-4">
-                <button className="bg-gray-800 text-white py-2 px-4 rounded-full w-32">All</button>
-                <button className="bg-gray-800 text-white py-2 px-4 rounded-full w-32">Libraries</button>
-                <button className="bg-gray-800 text-white py-2 px-4 rounded-full w-32">Gym</button>
-                <button className="bg-gray-800 text-white py-2 px-4 rounded-full w-32">Food</button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {locations.map(location => (
-                    <div key={location.id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                        <Link href='/screens/IKBLive'>
-                            <img
-                                src={location.image}
-                                alt={location.name}
-                                className="w-full h-64 object-cover cursor-pointer"
-                            />
-                        </Link>                            <div className="p-4">
-                            <h2 className="text-xl font-semibold">{location.name}</h2>
+        <div className="bg-background">
+            <div className="container mx-auto p-4">
+                <h1 className="text-2xl font-medium mb-6">Browse Locations On Campus</h1>
+                <div className="flex gap-4 mb-6">
+                    <button className="bg-filter hover:opacity-70 py-1 px-6 rounded-full">All</button>
+                    <button className="bg-white hover:opacity-70 py-1 px-6 rounded-full">Libraries</button>
+                    <button className="bg-white hover:opacity-70 py-1 px-6 rounded-full">Gym</button>
+                    <button className="bg-white hover:opacity-70 py-1 px-6 rounded-full">Food</button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {locations.map(location => (
+                        <div key={location.id} className="rounded-2xl overflow-hidden bg-transparent group">
+                            <Link href='screens\IKBLive'>
+                                <img
+                                    src={location.image}
+                                    alt={location.name}
+                                    className="w-full h-56 object-cover cursor-pointer rounded-2xl group-hover:opacity-70"
+                                />
+                            </Link>
+                            <div className="py-4 w-full grid grid-cols-3 gap-4">
+                                <div className='col-span-2'>
+                                    <div className='w-full grid grid-cols-3 gap-4'>
+                                        <div className="bg-white border-1 border-progress-bar rounded-full h-5 my-1 col-span-2">
+                                            <div className="bg-progress-bar h-5 rounded-full" style={{ width: '50%' }}></div>
+                                        </div>
+                                        <p className='self-end font-medium'>50% full</p>
+                                    </div>
+                                    <h2 className="text-xl font-medium">{location.name}</h2>
+                                </div>
+                                <div className='justify-items-end self-end'><FiHeart size={24} /></div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
