@@ -2,6 +2,7 @@
 import HourlyUpdates from "@/app/components/hourlyupdatecard";
 import Layout from '../../layout';
 import VideoPlayer from "@/app/components/videoPlayer";
+import Comments from "@/app/components/comments";
 import { useState } from 'react';
 
 
@@ -39,12 +40,12 @@ export default function IKBLive() {
                                 </button>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-8 w-full sm:w-1/3">
-                            <div className="flex-1 bg-gray-800 text-white p-4 rounded-lg">
+                        <div className="flex flex-col gap-8 w-full sm:w-1/3 text-black">
+                            <div className="flex-1  p-4 rounded-lg">
                                 <HourlyUpdates />
                             </div>
-                            <div className="flex-1 bg-gray-800 text-white p-4 rounded-lg">
-                                <HourlyUpdates />
+                            <div className="flex-1  p-4 rounded-lg">
+                                <Comments />
                             </div>
                         </div>
                     </div>
